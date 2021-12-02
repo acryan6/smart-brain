@@ -6,30 +6,40 @@ export const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
   const [age, setAge] = useState(user.age);
   const [pet, setPet] = useState(user.pet);
 
+  const handleProfileChange = (data) => {
+    fetch(`http://localhost:3000/profile/${user.id}`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: window.sessionStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        formInput: data,
+      }),
+    })
+      .then((resp) => {
+        if (resp.status === 200 || resp.status === 304) {
+          toggleModal();
+          loadUser({ ...user, ...data });
+        }
+      })
+      .catch(console.log);
+  };
+
   const handleFormChange = (event) => {
     switch (event.target.name) {
       case "user-name":
         setName(event.target.value);
+        break;
       case "user-age":
         setAge(event.target.value);
+        break;
       case "user-pet":
         setPet(event.target.value);
+        break;
       default:
         return;
     }
-  };
-
-  const handleProfileChange = (data) => {
-    fetch(`http://localhost:3000/profile/${user.id}`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ formInput: data }),
-    })
-      .then((res) => {
-        toggleModal();
-        loadUser({ ...user, ...data });
-      })
-      .catch(console.log());
   };
 
   return (
