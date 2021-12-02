@@ -86,6 +86,8 @@ class App extends Component {
       user: {
         id: data.id,
         name: data.name,
+        pet: data.pet,
+        age: data.age,
         email: data.email,
         entries: data.entries,
         joined: data.joined,
