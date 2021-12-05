@@ -90,7 +90,7 @@ class App extends Component {
         age: data.age,
         email: data.email,
         entries: data.entries,
-        joined: data.joined,
+        joined:             data.joined,
       },
     });
   };
